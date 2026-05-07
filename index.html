@@ -10,102 +10,94 @@ body{
   font-family:"Segoe UI", Arial, sans-serif;
   background:linear-gradient(135deg,#0d1b2a,#1b263b);
   margin:0;
-  padding:20px;
+  padding:10px;
 }
 
+/* CONTAINER */
 .container{
-  max-width:1100px;
+  max-width:900px;
   margin:auto;
   background:#fff;
   border-radius:18px;
-  padding:20px;
+  padding:15px;
 }
 
 /* HEADER */
 .header{
   text-align:center;
-  padding:15px;
+  padding:10px;
   background:rgba(0,0,0,0.7);
   backdrop-filter:blur(12px);
-  border-radius:14px;
+  border-radius:12px;
 }
 
-.logo{ max-width:100%; }
+.logo{
+  width:100%;
+  max-height:90px;
+  object-fit:contain;
+}
 
 /* INTRO */
 .intro{
   display:flex;
   justify-content:space-between;
   background:#eef3f7;
-  padding:12px 18px;
-  border-radius:10px;
-  margin:12px 0;
+  padding:10px;
+  border-radius:8px;
+  margin:10px 0;
+  font-size:14px;
 }
 
 /* QUESTION */
 .question{
-  margin-top:20px;
-  padding:20px;
+  margin-top:12px;
+  padding:12px;
   background:#f5f7fa;
-  border-radius:14px;
+  border-radius:12px;
 }
 
 .question h3{
   text-align:center;
-  font-size:24px;
+  font-size:18px;
+  margin-bottom:10px;
 }
 
-/* GRID */
+/* GRID (RESPONSIVE) */
 .emoji-grid{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:16px;
+  grid-template-columns: repeat(auto-fit, minmax(110px,1fr));
+  gap:10px;
 }
 
 /* CARD */
 .emoji-card{
-  position:relative;
   background:#fff4cc;
-  border-radius:18px;
+  border-radius:14px;
   text-align:center;
-  padding:22px;
+  padding:12px;
   cursor:pointer;
   border:2px solid transparent;
-  transition:all 0.25s ease;
+  transition:0.25s;
 }
 
 .emoji-card input{ display:none; }
 
+/* EMOJI */
 .emoji{
-  font-size:120px;
-  transition:0.25s;
-  filter: drop-shadow(0 12px 18px rgba(255,140,0,0.45));
+  font-size: clamp(50px, 9vw, 95px);
+  filter: drop-shadow(0 10px 15px rgba(255,140,0,0.4));
 }
 
+/* TEXT */
 .emoji-card span{
   display:block;
-  margin-top:10px;
-  font-size:16px;
-}
-
-/* GLASSY EFFECT */
-.emoji-card::after{
-  content:"";
-  position:absolute;
-  top:10%;
-  left:50%;
-  transform:translateX(-50%);
-  width:70%;
-  height:70%;
-  border-radius:50%;
-  background:radial-gradient(circle, rgba(255,255,255,0.4), transparent 70%);
-  opacity:0;
-  transition:0.3s;
+  margin-top:6px;
+  font-size:13px;
 }
 
 /* SELECTED */
 .emoji-card input:checked + .emoji{
-  transform:scale(1.35);
+  transform:scale(1.25);
 }
 
 .emoji-card:has(input:checked){
@@ -113,23 +105,33 @@ body{
   border:2px solid red;
 }
 
-.emoji-card:has(input:checked)::after{
-  opacity:1;
-}
-
 /* THANK YOU */
 #thankyou{
   display:none;
   text-align:center;
-  padding:80px 20px;
+  padding:60px 20px;
 }
 
 #thankEmoji{
-  font-size:130px;
+  font-size:110px;
 }
 
 #thankMessage{
-  font-size:26px;
+  font-size:22px;
+}
+
+/* TABLET */
+@media(max-width:768px){
+  .emoji-grid{
+    grid-template-columns: repeat(3,1fr);
+  }
+}
+
+/* PHONE */
+@media(max-width:480px){
+  .emoji-grid{
+    grid-template-columns: repeat(2,1fr);
+  }
 }
 </style>
 </head>
@@ -223,29 +225,21 @@ body{
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-const scriptURL="https://script.google.com/macros/s/AKfycbziDbmGoi2U2iJ_BoAcAIsjSonPQGWJmXtgIiS7kSgkxF4p-Ur7ED3B6JzARWvCRhb3/exec";
+const scriptURL="https://script.google.com/macros/s/AKfycbwVD0Rt1PdxrgSZ8AFfAxauML947NXbuHDV5iA65azyMU6cOMqsc3JJ0LCA4oz9TsR1/exec";
 
 const form=document.getElementById("feedbackForm");
 const cards=document.querySelectorAll(".emoji-card");
 
 let isSubmitting=false;
 
-// 🔥 HANDLE ALL CLICKS
 cards.forEach(card=>{
   card.addEventListener("click", function(){
 
     const input=card.querySelector("input");
     input.checked=true;
 
-    const name=input.name;
-
-    console.log("Clicked:", name);
-
-    // 🔥 ONLY trigger submit when last question answered
-    if(name==="recommend"){
-      setTimeout(()=>{
-        autoSubmit();
-      },150);
+    if(input.name==="recommend"){
+      setTimeout(autoSubmit,150);
     }
   });
 });
@@ -253,25 +247,23 @@ cards.forEach(card=>{
 function autoSubmit(){
 
   if(isSubmitting) return;
-
-  console.log("Submitting...");
   isSubmitting=true;
 
-  const overallInput=document.querySelector('input[name="overall"]:checked');
-  const overallValue=overallInput ? overallInput.value : "Average";
+  const getVal = name =>
+    document.querySelector(`input[name="${name}"]:checked`)?.value || "";
 
-  // 🔥 FIRE & FORGET (no waiting)
-  try{
-    fetch(scriptURL,{
-      method:"POST",
-      mode:"no-cors",
-      body:new FormData(form)
-    });
-  }catch(e){
-    console.log("Fetch error ignored");
-  }
+  const params = new URLSearchParams({
+    product_quality: getVal("product_quality"),
+    service_quality: getVal("service_quality"),
+    customer_service: getVal("customer_service"),
+    overall: getVal("overall"),
+    recommend: getVal("recommend")
+  });
 
-  showThankYou(overallValue);
+  const img=new Image();
+  img.src = scriptURL + "?" + params.toString();
+
+  showThankYou(getVal("overall"));
 
   setTimeout(fullReset,3000);
 }
@@ -311,3 +303,8 @@ function fullReset(){
 
 });
 </script>
+
+</body>
+</html>
+
+
