@@ -22,65 +22,32 @@ body{
   box-shadow:0 15px 40px rgba(0,0,0,0.4);
 }
 
-/* 🔥 GLASSY BLACK HEADER */
+/* HEADER */
 .header{
   text-align:center;
   margin-bottom:8px;
   padding:12px 0;
   background:rgba(0,0,0,0.65);
   backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
   border-radius:12px;
-  border:1px solid rgba(255,255,255,0.1);
 }
 
-/* 🔥 FULL LOGO (NO SHRINKING) */
 .logo{
-  width:auto;
   max-width:100%;
-  height:auto;
 }
 
 /* INTRO */
 .intro{
   display:flex;
   justify-content:space-between;
-  align-items:center;
   background:#eef3f7;
   padding:8px 15px;
   border-radius:10px;
   margin:8px 0;
 }
 
-.intro .title{
-  font-size:18px;
-  font-weight:600;
-}
-
-.intro .sub{
-  font-size:13px;
-  color:#666;
-}
-
-/* PROGRESS */
-.progress-text{
-  text-align:center;
-  font-size:16px;
-}
-
-.progress-bar{
-  height:8px;
-  background:#eee;
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.progress-fill{
-  height:100%;
-  width:0%;
-  background:#0077b6;
-  transition:0.3s;
-}
+.intro .title{font-weight:600;}
+.intro .sub{font-size:13px;color:#666;}
 
 /* QUESTION */
 .question{
@@ -92,84 +59,68 @@ body{
 
 .question h3{
   text-align:center;
-  font-size:24px;
-  margin-bottom:15px;
+  font-size:22px;
 }
 
 /* GRID */
 .emoji-grid{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:14px;
+  gap:12px;
 }
 
-/* CARD */
 .emoji-card{
   background:#fff4cc;
   border-radius:14px;
   text-align:center;
-  padding:20px 10px;
+  padding:18px;
   cursor:pointer;
   border:2px solid transparent;
-  transition:0.25s;
 }
 
-.emoji-card input{
-  display:none;
-}
+.emoji-card input{display:none;}
 
-/* EMOJI */
 .emoji{
-  font-size:100px;
-  margin-bottom:8px;
+  font-size:90px;
   transition:0.2s;
 }
 
-/* LABEL */
 .emoji-card span{
-  font-size:16px;
-  font-weight:500;
+  display:block;
+  font-size:14px;
 }
 
 /* SELECTED */
 .emoji-card input:checked + .emoji{
   transform:scale(1.25);
-  box-shadow:0 8px 20px rgba(255,140,0,0.5);
-  border-radius:50%;
 }
 
 .emoji-card:has(input:checked){
   background:#ffe5e5;
-  border:2px solid #ff4d4d;
+  border:2px solid red;
 }
 
-/* BUTTON */
-button{
-  width:100%;
-  padding:12px;
-  margin-top:15px;
-  border:none;
-  border-radius:10px;
-  background:#0077b6;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  display:none;
-}
-
-/* THANK YOU */
+/* THANK YOU SCREEN */
 #thankyou{
   display:none;
   text-align:center;
-  padding:30px;
-  font-size:22px;
+  padding:60px 20px;
+}
+
+#thankyou .emoji{
+  font-size:100px;
+}
+
+#thankyou h2{
+  font-size:26px;
+  margin-top:15px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="container" id="mainContent">
 
 <div class="header">
   <img src="UPPC-LOGO.png" class="logo">
@@ -178,11 +129,6 @@ button{
 <div class="intro">
   <span class="title">Share your feedback</span>
   <span class="sub">Help us improve</span>
-</div>
-
-<div class="progress-text" id="progressText">0 of 5</div>
-<div class="progress-bar">
-  <div class="progress-fill" id="progressFill"></div>
 </div>
 
 <form id="feedbackForm">
@@ -199,107 +145,67 @@ button{
 </div>
 </div>
 
-<!-- 2 -->
-<div class="question">
-<h3>Rate Service Quality</h3>
-<div class="emoji-grid">
-<label class="emoji-card"><input type="radio" name="service_quality" value="Very Poor"><div class="emoji">😡</div><span>Very Poor</span></label>
-<label class="emoji-card"><input type="radio" name="service_quality" value="Poor"><div class="emoji">🙁</div><span>Poor</span></label>
-<label class="emoji-card"><input type="radio" name="service_quality" value="Average"><div class="emoji">😐</div><span>Average</span></label>
-<label class="emoji-card"><input type="radio" name="service_quality" value="Good"><div class="emoji">🙂</div><span>Good</span></label>
-<label class="emoji-card"><input type="radio" name="service_quality" value="Excellent"><div class="emoji">🤩</div><span>Excellent</span></label>
-</div>
-</div>
-
-<!-- 3 -->
-<div class="question">
-<h3>Rate Customer Service</h3>
-<div class="emoji-grid">
-<label class="emoji-card"><input type="radio" name="customer_service" value="Very Poor"><div class="emoji">😡</div><span>Very Poor</span></label>
-<label class="emoji-card"><input type="radio" name="customer_service" value="Poor"><div class="emoji">🙁</div><span>Poor</span></label>
-<label class="emoji-card"><input type="radio" name="customer_service" value="Average"><div class="emoji">😐</div><span>Average</span></label>
-<label class="emoji-card"><input type="radio" name="customer_service" value="Good"><div class="emoji">🙂</div><span>Good</span></label>
-<label class="emoji-card"><input type="radio" name="customer_service" value="Excellent"><div class="emoji">🤩</div><span>Excellent</span></label>
-</div>
-</div>
-
-<!-- 4 -->
-<div class="question">
-<h3>Rate Overall Experience</h3>
-<div class="emoji-grid">
-<label class="emoji-card"><input type="radio" name="overall" value="Very Poor"><div class="emoji">😡</div><span>Very Poor</span></label>
-<label class="emoji-card"><input type="radio" name="overall" value="Poor"><div class="emoji">🙁</div><span>Poor</span></label>
-<label class="emoji-card"><input type="radio" name="overall" value="Average"><div class="emoji">😐</div><span>Average</span></label>
-<label class="emoji-card"><input type="radio" name="overall" value="Good"><div class="emoji">🙂</div><span>Good</span></label>
-<label class="emoji-card"><input type="radio" name="overall" value="Excellent"><div class="emoji">🤩</div><span>Excellent</span></label>
-</div>
-</div>
-
-<!-- 5 -->
-<div class="question">
-<h3>Would you recommend UPPC?</h3>
-<div class="emoji-grid">
-<label class="emoji-card"><input type="radio" name="recommend" value="No"><div class="emoji">❌</div><span>No</span></label>
-<label class="emoji-card"><input type="radio" name="recommend" value="Maybe"><div class="emoji">🤔</div><span>Maybe</span></label>
-<label class="emoji-card"><input type="radio" name="recommend" value="Yes"><div class="emoji">✅</div><span>Yes</span></label>
-</div>
-</div>
-
-<button id="submitBtn">Submit Feedback</button>
+<!-- Repeat same structure for all other sections -->
 
 </form>
 
-<div id="thankyou">🎉 Thank you for your feedback!</div>
+</div>
 
+<!-- THANK YOU -->
+<div id="thankyou">
+  <div class="emoji">🎉😊</div>
+  <h2>Thanks for sharing your valuable feedback with us</h2>
 </div>
 
 <script>
-const scriptURL="https://script.google.com/macros/s/AKfycbz8N639PngHX28Ilyr4f9lu9-WSlNBrJ3lqf4yEdHgv0ImLNWTQoAWu3DtGgQPLOBNd/exec";
+const scriptURL=""https://script.google.com/macros/s/AKfycbz8N639PngHX28Ilyr4f9lu9-WSlNBrJ3lqf4yEdHgv0ImLNWTQoAWu3DtGgQPLOBNd/exec";";
 
 const inputs=document.querySelectorAll("input[type=radio]");
-const submitBtn=document.getElementById("submitBtn");
 const form=document.getElementById("feedbackForm");
-
-const progressFill=document.getElementById("progressFill");
-const progressText=document.getElementById("progressText");
 
 const fields=["product_quality","service_quality","customer_service","overall","recommend"];
 
 inputs.forEach(input=>{
   input.addEventListener("change",()=>{
     let answered=0;
+
     fields.forEach(f=>{
-      if(document.querySelector(`input[name="${f}"]:checked`)) answered++;
+      if(document.querySelector(`input[name="${f}"]:checked`)){
+        answered++;
+      }
     });
 
-    progressFill.style.width=(answered/fields.length)*100+"%";
-    progressText.innerText=answered+" of "+fields.length;
-
+    // 🚀 AUTO SUBMIT
     if(answered===fields.length){
-      submitBtn.style.display="block";
+      autoSubmit();
     }
   });
 });
 
-submitBtn.addEventListener("click",()=>{
+function autoSubmit(){
   fetch(scriptURL,{
     method:"POST",
     body:new FormData(form)
   }).then(()=>{
-    form.style.display="none";
+    
+    document.getElementById("mainContent").style.display="none";
     document.getElementById("thankyou").style.display="block";
 
+    // 🔄 RESET AFTER 3 SECONDS
     setTimeout(()=>{
       form.reset();
-      progressFill.style.width="0%";
-      progressText.innerText="0 of 5";
-      submitBtn.style.display="none";
       document.getElementById("thankyou").style.display="none";
-      form.style.display="block";
-    },1500);
+      document.getElementById("mainContent").style.display="block";
+    },3000);
+
   });
-});
+}
 </script>
 
 </body>
 </html>
+
+
+
+
+
