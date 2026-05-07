@@ -10,24 +10,25 @@ body{
   font-family:"Segoe UI", Arial, sans-serif;
   background:linear-gradient(135deg,#0d1b2a,#1b263b);
   margin:0;
-  padding:10px;
+  padding:20px;
 }
 
+/* CONTAINER (zoomed out feel) */
 .container{
-  max-width:950px;
+  max-width:1100px;
   margin:auto;
-  background:#fff;
-  border-radius:16px;
-  padding:15px;
+  background:#ffffff;
+  border-radius:18px;
+  padding:20px;
 }
 
 /* HEADER */
 .header{
   text-align:center;
-  padding:12px 0;
-  background:rgba(0,0,0,0.65);
-  backdrop-filter:blur(10px);
-  border-radius:12px;
+  padding:15px;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(12px);
+  border-radius:14px;
 }
 
 .logo{
@@ -39,79 +40,108 @@ body{
   display:flex;
   justify-content:space-between;
   background:#eef3f7;
-  padding:10px 15px;
+  padding:12px 18px;
   border-radius:10px;
-  margin:10px 0;
-  font-weight:500;
+  margin:12px 0;
+  font-size:16px;
 }
 
 /* QUESTION */
 .question{
-  margin-top:15px;
-  padding:15px;
-  background:#f4f6f8;
-  border-radius:12px;
+  margin-top:20px;
+  padding:20px;
+  background:#f5f7fa;
+  border-radius:14px;
 }
 
 .question h3{
   text-align:center;
-  font-size:22px;
+  font-size:24px;
+  margin-bottom:15px;
 }
 
 /* GRID */
 .emoji-grid{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:12px;
+  gap:16px;
 }
 
+/* CARD */
 .emoji-card{
+  position:relative;
   background:#fff4cc;
-  border-radius:14px;
+  border-radius:18px;
   text-align:center;
-  padding:18px;
+  padding:22px;
   cursor:pointer;
   border:2px solid transparent;
-  transition:all 0.2s ease;
+  transition:all 0.25s ease;
 }
 
-.emoji-card input{display:none;}
+.emoji-card input{
+  display:none;
+}
 
+/* BIGGER EMOJIS */
 .emoji{
-  font-size:100px;
-  transition:0.2s;
-  filter: drop-shadow(0 8px 12px rgba(255,140,0,0.4));
+  font-size:120px;
+  transition:0.25s;
+  filter: drop-shadow(0 12px 18px rgba(255,140,0,0.45));
 }
 
+/* LABEL */
 .emoji-card span{
   display:block;
-  font-size:14px;
+  margin-top:10px;
+  font-size:16px;
 }
 
-/* SELECTED */
+/* GLASSY EFFECT BASE */
+.emoji-card::after{
+  content:"";
+  position:absolute;
+  top:10%;
+  left:50%;
+  transform:translateX(-50%);
+  width:70%;
+  height:70%;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,0.35), transparent 70%);
+  opacity:0;
+  transition:0.3s;
+}
+
+/* SELECTED STATE */
 .emoji-card input:checked + .emoji{
   transform:scale(1.35);
 }
 
+/* GLASSY RED SELECTION */
 .emoji-card:has(input:checked){
-  background:#ffe5e5;
-  border:2px solid #ff4d4d;
+  background:rgba(255,200,200,0.6);
+  border:2px solid #ff3b3b;
+  backdrop-filter:blur(6px);
 }
 
-/* THANK YOU */
+.emoji-card:has(input:checked)::after{
+  opacity:1;
+}
+
+/* THANK YOU SCREEN */
 #thankyou{
   display:none;
   text-align:center;
-  padding:60px 20px;
+  padding:80px 20px;
 }
 
 #thankEmoji{
-  font-size:100px;
-  margin-bottom:10px;
+  font-size:130px;
+  margin-bottom:15px;
 }
 
 #thankMessage{
-  font-size:24px;
+  font-size:26px;
 }
 </style>
 </head>
@@ -127,13 +157,13 @@ body{
 </div>
 
 <div class="intro">
-  <span>Share your feedback</span>
+  <span><b>Share your feedback</b></span>
   <span>Help us improve</span>
 </div>
 
 <form id="feedbackForm">
 
-<!-- 1 -->
+<!-- PRODUCT -->
 <div class="question">
 <h3>Rate Product Quality</h3>
 <div class="emoji-grid">
@@ -145,7 +175,7 @@ body{
 </div>
 </div>
 
-<!-- 2 -->
+<!-- SERVICE -->
 <div class="question">
 <h3>Rate Service Quality</h3>
 <div class="emoji-grid">
@@ -157,7 +187,7 @@ body{
 </div>
 </div>
 
-<!-- 3 -->
+<!-- CUSTOMER -->
 <div class="question">
 <h3>Rate Customer Service</h3>
 <div class="emoji-grid">
@@ -169,7 +199,7 @@ body{
 </div>
 </div>
 
-<!-- 4 -->
+<!-- OVERALL -->
 <div class="question">
 <h3>Rate Overall Experience</h3>
 <div class="emoji-grid">
@@ -181,7 +211,7 @@ body{
 </div>
 </div>
 
-<!-- 5 -->
+<!-- RECOMMEND -->
 <div class="question">
 <h3>Would you recommend UPPC?</h3>
 <div class="emoji-grid">
@@ -246,15 +276,11 @@ function autoSubmit(){
     method:"POST",
     body:new FormData(form)
   })
-  .then(res=>res.text())
-  .then(()=>{
+  .then(()=> {
     showThankYou(overallValue);
     setTimeout(fullReset,3000);
   })
-  .catch(err=>{
-    console.error("Error:", err);
-    isSubmitting=false;
-  });
+  .catch(()=> isSubmitting=false);
 }
 
 function showThankYou(rating){
