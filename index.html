@@ -230,48 +230,49 @@ const cards=document.querySelectorAll(".emoji-card");
 
 let isSubmitting=false;
 
-const fields=["product_quality","service_quality","customer_service","overall","recommend"];
-
+// 🔥 HANDLE ALL CLICKS
 cards.forEach(card=>{
   card.addEventListener("click", function(){
 
     const input=card.querySelector("input");
     input.checked=true;
 
-    setTimeout(checkAllAnswered,100);
+    const name=input.name;
+
+    console.log("Clicked:", name);
+
+    // 🔥 ONLY trigger submit when last question answered
+    if(name==="recommend"){
+      setTimeout(()=>{
+        autoSubmit();
+      },150);
+    }
   });
 });
 
-function checkAllAnswered(){
-
-  for(let f of fields){
-    if(!document.querySelector(`input[name="${f}"]:checked`)){
-      return;
-    }
-  }
-
-  if(!isSubmitting){
-    autoSubmit();
-  }
-}
-
 function autoSubmit(){
 
+  if(isSubmitting) return;
+
+  console.log("Submitting...");
   isSubmitting=true;
 
   const overallInput=document.querySelector('input[name="overall"]:checked');
   const overallValue=overallInput ? overallInput.value : "Average";
 
-  // FIRE & FORGET
+  // 🔥 FIRE & FORGET (no waiting)
   try{
     fetch(scriptURL,{
       method:"POST",
       mode:"no-cors",
       body:new FormData(form)
     });
-  }catch(e){}
+  }catch(e){
+    console.log("Fetch error ignored");
+  }
 
   showThankYou(overallValue);
+
   setTimeout(fullReset,3000);
 }
 
@@ -310,6 +311,3 @@ function fullReset(){
 
 });
 </script>
-
-</body>
-</html>
