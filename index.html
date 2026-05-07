@@ -1,323 +1,947 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>UPPC Feedback</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>UPPC Feedback Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-body{
-  font-family:"Segoe UI", Arial, sans-serif;
-  background:linear-gradient(135deg,#0d1b2a,#1b263b);
-  margin:0;
-  padding:10px;
-}
+        /* UPPC Brand Colors */
+        :root {
+            --uppc-red: #E31937;
+            --uppc-yellow: #FCD116;
+            --uppc-black: #1a1a1a;
+            --uppc-dark-red: #B8152B;
+            --uppc-light-red: #FF4757;
+        }
 
-/* CONTAINER */
-.container{
-  max-width:900px;
-  margin:auto;
-  background:#fff;
-  border-radius:18px;
-  padding:12px;
-}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, rgba(227, 25, 55, 0.98) 0%, rgba(184, 21, 43, 0.98) 50%, rgba(255, 71, 87, 0.95) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow-x: hidden;
+        }
 
-/* HEADER */
-.header{
-  text-align:center;
-  padding:10px;
-  background:rgba(0,0,0,0.7);
-  border-radius:12px;
-}
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(252, 209, 22, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(227, 25, 55, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
 
-.logo{
-  width:100%;
-  max-height:90px;
-  object-fit:contain;
-}
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
 
-/* INTRO */
-.intro{
-  display:flex;
-  justify-content:space-between;
-  background:#eef3f7;
-  padding:10px;
-  border-radius:8px;
-  margin:10px 0;
-  font-size:14px;
-}
+        .wrapper {
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            z-index: 1;
+        }
 
-/* QUESTION */
-.question{
-  margin-top:12px;
-  padding:12px;
-  background:#f5f7fa;
-  border-radius:12px;
-}
+        .container {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 32px;
+            padding: 50px 45px;
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.25),
+                0 0 60px rgba(227, 25, 55, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            animation: slideUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
 
-.question h3{
-  text-align:center;
-  font-size:18px;
-}
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(252, 209, 22, 0.03) 0%, rgba(227, 25, 55, 0.02) 100%);
+            border-radius: 32px;
+            pointer-events: none;
+        }
 
-/* FLEX GRID (STABLE) */
-.emoji-grid{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
-}
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
 
-/* CARD */
-.emoji-card{
-  flex:1 1 calc(20% - 10px);
-  max-width:150px;
-  min-width:110px;
-  background:#fff4cc;
-  border-radius:14px;
-  text-align:center;
-  padding:12px;
-  cursor:pointer;
-  border:2px solid transparent;
-  transition:0.25s;
-}
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 45px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid var(--uppc-yellow);
+            position: relative;
+            animation: fadeInDown 0.8s ease-out 0.1s both;
+        }
 
-.emoji-card input{ display:none; }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-/* EMOJI */
-.emoji{
-  font-size:min(18vw, 85px);
-  transition:0.2s;
-}
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--uppc-red) 0%, var(--uppc-yellow) 50%, var(--uppc-red) 100%);
+        }
 
-/* LABEL */
-.emoji-card span{
-  display:block;
-  margin-top:6px;
-  font-size:13px;
-}
+        .logo {
+            max-width: 380px;
+            height: auto;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 12px 24px rgba(227, 25, 55, 0.35));
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
 
-/* SELECTED STATE */
-.emoji-card.selected{
-  background:rgba(255,200,200,0.6);
-  border:2px solid red;
-}
+        .logo:hover {
+            transform: scale(1.06) translateY(-2px);
+            filter: drop-shadow(0 16px 32px rgba(227, 25, 55, 0.45));
+        }
 
-.emoji-card.selected .emoji{
-  transform:scale(1.25);
-}
+        .header-text {
+            color: var(--uppc-black);
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.8px;
+            background: linear-gradient(135deg, var(--uppc-red) 0%, var(--uppc-dark-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-/* THANK YOU */
-#thankyou{
-  display:none;
-  text-align:center;
-  padding:60px 20px;
-}
+        .header-subtext {
+            color: var(--uppc-red);
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            opacity: 0.9;
+        }
 
-#thankEmoji{
-  font-size:100px;
-}
+        /* PROGRESS BAR */
+        .progress-container {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
 
-#thankMessage{
-  font-size:22px;
-}
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-/* TABLET */
-@media(max-width:768px){
-  .emoji-card{
-    flex:1 1 calc(33.33% - 10px);
-  }
-}
+        .progress-bar {
+            height: 10px;
+            background: linear-gradient(90deg, rgba(227, 25, 55, 0.12) 0%, rgba(252, 209, 22, 0.12) 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid var(--uppc-yellow);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
 
-/* PHONE */
-@media(max-width:480px){
-  .emoji-card{
-    flex:1 1 calc(50% - 10px);
-  }
-}
-</style>
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--uppc-red) 0%, var(--uppc-yellow) 45%, var(--uppc-yellow) 55%, var(--uppc-light-red) 100%);
+            width: 0%;
+            transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 12px;
+            box-shadow: 
+                0 0 15px rgba(227, 25, 55, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: var(--uppc-dark-red);
+            margin-top: 10px;
+            text-align: right;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        /* QUESTION SECTION */
+        .question-section {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .question-section:nth-child(1) { animation-delay: 0.3s; }
+        .question-section:nth-child(2) { animation-delay: 0.35s; }
+        .question-section:nth-child(3) { animation-delay: 0.4s; }
+        .question-section:nth-child(4) { animation-delay: 0.45s; }
+        .question-section:nth-child(5) { animation-delay: 0.5s; }
+
+        .question-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--uppc-black);
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.4px;
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--uppc-red) 0%, var(--uppc-dark-red) 100%);
+            color: white;
+            border-radius: 50%;
+            margin-right: 14px;
+            font-size: 18px;
+            font-weight: 800;
+            box-shadow: 
+                0 8px 20px rgba(227, 25, 55, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            letter-spacing: -0.2px;
+        }
+
+        /* EMOJI GRID */
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .emoji-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 18px;
+            background: linear-gradient(135deg, rgba(252, 209, 22, 0.1) 0%, rgba(227, 25, 55, 0.06) 100%);
+            border: 2.5px solid var(--uppc-yellow);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 4px 12px rgba(227, 25, 55, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .emoji-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--uppc-red) 0%, var(--uppc-dark-red) 100%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            z-index: -1;
+            border-radius: 20px;
+        }
+
+        .emoji-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            z-index: 1;
+            pointer-events: none;
+            border-radius: 20px;
+        }
+
+        .emoji-card:hover {
+            border-color: var(--uppc-red);
+            transform: translateY(-8px);
+            box-shadow: 
+                0 16px 32px rgba(227, 25, 55, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            background: linear-gradient(135deg, rgba(227, 25, 55, 0.12) 0%, rgba(252, 209, 22, 0.1) 100%);
+        }
+
+        .emoji-card:active {
+            transform: translateY(-4px);
+        }
+
+        .emoji-card input {
+            display: none;
+        }
+
+        .emoji {
+            font-size: 54px;
+            margin-bottom: 14px;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: block;
+            line-height: 1;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .emoji-label {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--uppc-black);
+            text-align: center;
+            letter-spacing: 0.4px;
+            text-transform: capitalize;
+        }
+
+        /* SELECTED STATE - Emoji zooms IN with glow */
+        .emoji-card.selected {
+            background: linear-gradient(135deg, var(--uppc-red) 0%, var(--uppc-dark-red) 100%);
+            border-color: var(--uppc-yellow);
+            color: white;
+            box-shadow: 
+                0 20px 50px rgba(227, 25, 55, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                0 0 40px rgba(252, 209, 22, 0.4);
+            transform: translateY(-4px);
+            animation: pulse 0.5s ease-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: translateY(0) scale(0.95); }
+            50% { transform: translateY(-8px) scale(1.02); }
+            100% { transform: translateY(-4px) scale(1); }
+        }
+
+        .emoji-card.selected::after {
+            opacity: 1;
+        }
+
+        .emoji-card.selected .emoji {
+            transform: scale(1.8) rotate(5deg);
+            animation: zoomIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 8px 16px rgba(255, 255, 255, 0.4));
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.9) rotate(5deg); }
+            100% { transform: scale(1.8) rotate(5deg); }
+        }
+
+        .emoji-card.selected .emoji-label {
+            color: var(--uppc-yellow);
+            font-weight: 900;
+            letter-spacing: 0.6px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* THANK YOU SECTION */
+        #thankyou {
+            display: none;
+            text-align: center;
+            padding: 80px 50px;
+            animation: celebrationZoom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes celebrationZoom {
+            from {
+                opacity: 0;
+                transform: scale(0.7) rotateY(-20deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        #thankEmoji {
+            font-size: 140px;
+            margin-bottom: 30px;
+            display: block;
+            animation: float 3.5s ease-in-out infinite;
+            filter: drop-shadow(0 12px 24px rgba(227, 25, 55, 0.3));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-25px) scale(1.05); }
+        }
+
+        #thankMessage {
+            font-size: 28px;
+            color: var(--uppc-black);
+            font-weight: 800;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            letter-spacing: -0.6px;
+            background: linear-gradient(135deg, var(--uppc-red) 0%, var(--uppc-dark-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .thank-subtext {
+            font-size: 17px;
+            color: var(--uppc-red);
+            margin-bottom: 40px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            opacity: 0.95;
+        }
+
+        .thank-divider {
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--uppc-red) 0%, var(--uppc-yellow) 50%, var(--uppc-dark-red) 100%);
+            margin: 30px auto;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(227, 25, 55, 0.35);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                padding: 32px 24px;
+                border-radius: 24px;
+            }
+
+            .logo {
+                max-width: 300px;
+                margin-bottom: 18px;
+            }
+
+            .header-text {
+                font-size: 26px;
+                margin-bottom: 8px;
+            }
+
+            .header-subtext {
+                font-size: 15px;
+            }
+
+            .emoji-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 14px;
+            }
+
+            .emoji-card {
+                padding: 18px 12px;
+                border-radius: 16px;
+            }
+
+            .emoji {
+                font-size: 44px;
+                margin-bottom: 10px;
+            }
+
+            .emoji-label {
+                font-size: 12px;
+            }
+
+            .question-number {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+
+            #thankyou {
+                padding: 60px 30px;
+            }
+
+            #thankEmoji {
+                font-size: 110px;
+                margin-bottom: 20px;
+            }
+
+            #thankMessage {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 16px;
+                border-radius: 18px;
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.2),
+                    0 0 40px rgba(227, 25, 55, 0.25);
+            }
+
+            .logo {
+                max-width: 240px;
+                margin-bottom: 14px;
+            }
+
+            .header {
+                margin-bottom: 32px;
+                padding-bottom: 20px;
+            }
+
+            .header-text {
+                font-size: 22px;
+                margin-bottom: 6px;
+            }
+
+            .header-subtext {
+                font-size: 14px;
+            }
+
+            .question-title {
+                font-size: 16px;
+                margin-bottom: 16px;
+            }
+
+            .question-number {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+                margin-right: 10px;
+            }
+
+            .emoji-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .emoji-card {
+                padding: 16px 12px;
+                border-radius: 14px;
+                border-width: 2px;
+            }
+
+            .emoji {
+                font-size: 40px;
+                margin-bottom: 8px;
+            }
+
+            .emoji-label {
+                font-size: 11px;
+                font-weight: 700;
+            }
+
+            .progress-bar {
+                height: 8px;
+            }
+
+            .progress-text {
+                font-size: 12px;
+            }
+
+            #thankyou {
+                padding: 40px 20px;
+            }
+
+            #thankEmoji {
+                font-size: 90px;
+                margin-bottom: 16px;
+            }
+
+            #thankMessage {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            .thank-subtext {
+                font-size: 15px;
+                margin-bottom: 24px;
+            }
+
+            .thank-divider {
+                width: 80px;
+                height: 4px;
+                margin: 20px auto;
+            }
+        }
+
+        /* ACCESSIBILITY */
+        .emoji-card:focus-visible {
+            outline: 3px solid var(--uppc-yellow);
+            outline-offset: 2px;
+        }
+
+        .emoji-card:focus-visible.selected {
+            outline: 3px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* UTILITY */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="wrapper">
+        <div class="container">
+            <div id="mainContent">
+                <!-- HEADER -->
+                <div class="header">
+                    <img src="UPPC-LOGO.png" alt="Uganda Printing and Publishing Corporation" class="logo">
+                    <h1 class="header-text">Your Feedback Matters</h1>
+                    <p class="header-subtext">Help UPPC serve you better</p>
+                </div>
 
-<div class="container">
+                <!-- PROGRESS BAR -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">0% Complete</div>
+                </div>
 
-<div id="mainContent">
+                <form id="feedbackForm">
+                    <!-- PRODUCT QUALITY -->
+                    <div class="question-section">
+                        <label class="question-title">
+                            <span class="question-number">1</span>
+                            Rate Product Quality
+                        </label>
+                        <div class="emoji-grid">
+                            <label class="emoji-card">
+                                <input type="radio" name="product_quality" value="Very Poor">
+                                <span class="emoji">😡</span>
+                                <span class="emoji-label">Very Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="product_quality" value="Poor">
+                                <span class="emoji">🙁</span>
+                                <span class="emoji-label">Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="product_quality" value="Average">
+                                <span class="emoji">😐</span>
+                                <span class="emoji-label">Average</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="product_quality" value="Good">
+                                <span class="emoji">🙂</span>
+                                <span class="emoji-label">Good</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="product_quality" value="Excellent">
+                                <span class="emoji">🤩</span>
+                                <span class="emoji-label">Excellent</span>
+                            </label>
+                        </div>
+                    </div>
 
-<div class="header">
-  <img src="UPPC-LOGO.png" class="logo">
-</div>
+                    <!-- SERVICE QUALITY -->
+                    <div class="question-section">
+                        <label class="question-title">
+                            <span class="question-number">2</span>
+                            Rate Service Quality
+                        </label>
+                        <div class="emoji-grid">
+                            <label class="emoji-card">
+                                <input type="radio" name="service_quality" value="Very Poor">
+                                <span class="emoji">😡</span>
+                                <span class="emoji-label">Very Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="service_quality" value="Poor">
+                                <span class="emoji">🙁</span>
+                                <span class="emoji-label">Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="service_quality" value="Average">
+                                <span class="emoji">😐</span>
+                                <span class="emoji-label">Average</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="service_quality" value="Good">
+                                <span class="emoji">🙂</span>
+                                <span class="emoji-label">Good</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="service_quality" value="Excellent">
+                                <span class="emoji">🤩</span>
+                                <span class="emoji-label">Excellent</span>
+                            </label>
+                        </div>
+                    </div>
 
-<div class="intro">
-  <span><b>Share your feedback</b></span>
-  <span>Help us improve</span>
-</div>
+                    <!-- CUSTOMER SERVICE -->
+                    <div class="question-section">
+                        <label class="question-title">
+                            <span class="question-number">3</span>
+                            Rate Customer Service
+                        </label>
+                        <div class="emoji-grid">
+                            <label class="emoji-card">
+                                <input type="radio" name="customer_service" value="Very Poor">
+                                <span class="emoji">😡</span>
+                                <span class="emoji-label">Very Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="customer_service" value="Poor">
+                                <span class="emoji">🙁</span>
+                                <span class="emoji-label">Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="customer_service" value="Average">
+                                <span class="emoji">😐</span>
+                                <span class="emoji-label">Average</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="customer_service" value="Good">
+                                <span class="emoji">🙂</span>
+                                <span class="emoji-label">Good</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="customer_service" value="Excellent">
+                                <span class="emoji">🤩</span>
+                                <span class="emoji-label">Excellent</span>
+                            </label>
+                        </div>
+                    </div>
 
-<form id="feedbackForm">
+                    <!-- OVERALL EXPERIENCE -->
+                    <div class="question-section">
+                        <label class="question-title">
+                            <span class="question-number">4</span>
+                            Rate Overall Experience
+                        </label>
+                        <div class="emoji-grid">
+                            <label class="emoji-card">
+                                <input type="radio" name="overall" value="Very Poor">
+                                <span class="emoji">😡</span>
+                                <span class="emoji-label">Very Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="overall" value="Poor">
+                                <span class="emoji">🙁</span>
+                                <span class="emoji-label">Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="overall" value="Average">
+                                <span class="emoji">😐</span>
+                                <span class="emoji-label">Average</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="overall" value="Good">
+                                <span class="emoji">🙂</span>
+                                <span class="emoji-label">Good</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="overall" value="Excellent">
+                                <span class="emoji">🤩</span>
+                                <span class="emoji-label">Excellent</span>
+                            </label>
+                        </div>
+                    </div>
 
-<!-- PRODUCT -->
-<div class="question">
-<h3>Rate Product Quality</h3>
-<div class="emoji-grid">
-<label class="emoji-card"><input type="radio" name="product_quality" value="Very Poor"><div class="emoji">😡</div><span>Very Poor</span></label>
-<label class="emoji-card"><input type="radio" name="product_quality" value="Poor"><div class="emoji">🙁</div><span>Poor</span></label>
-<label class="emoji-card"><input type="radio" name="product_quality" value="Average"><div class="emoji">😐</div><span>Average</span></label>
-<label class="emoji-card"><input type="radio" name="product_quality" value="Good"><div class="emoji">🙂</div><span>Good</span></label>
-<label class="emoji-card"><input type="radio" name="product_quality" value="Excellent"><div class="emoji">🤩</div><span>Excellent</span></label>
-</div>
-</div>
+                    <!-- RECOMMENDATION -->
+                    <div class="question-section">
+                        <label class="question-title">
+                            <span class="question-number">5</span>
+                            Would you recommend UPPC?
+                        </label>
+                        <div class="emoji-grid">
+                            <label class="emoji-card">
+                                <input type="radio" name="recommend" value="No">
+                                <span class="emoji">❌</span>
+                                <span class="emoji-label">No</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="recommend" value="Maybe">
+                                <span class="emoji">🤔</span>
+                                <span class="emoji-label">Maybe</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="recommend" value="Yes">
+                                <span class="emoji">✅</span>
+                                <span class="emoji-label">Yes</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
-<!-- SERVICE -->
-<div class="question">
-<h3>Rate Service Quality</h3>
-<div class="emoji-grid">
-<label class="emoji-card"><input type="radio" name="service_quality" value="Very Poor"><div class="emoji">😡</div><span>Very Poor</span></label>
-<label class="emoji-card"><input type="radio" name="service_quality" value="Poor"><div class="emoji">🙁</div><span>Poor</span></label>
-<label class="emoji-card"><input type="radio" name="service_quality" value="Average"><div class="emoji">😐</div><span>Average</span></label>
-<label class="emoji-card"><input type="radio" name="service_quality" value="Good"><div class="emoji">🙂</div><span>Good</span></label>
-<label class="emoji-card"><input type="radio" name="service_quality" value="Excellent"><div class="emoji">🤩</div><span>Excellent</span></label>
-</div>
-</div>
+            <!-- THANK YOU SECTION -->
+            <div id="thankyou">
+                <span id="thankEmoji">😊</span>
+                <h2 id="thankMessage">Thank You!</h2>
+                <div class="thank-divider"></div>
+                <p class="thank-subtext">Your feedback helps us serve you better</p>
+            </div>
+        </div>
+    </div>
 
-<!-- CUSTOMER -->
-<div class="question">
-<h3>Rate Customer Service</h3>
-<div class="emoji-grid">
-<label class="emoji-card"><input type="radio" name="customer_service" value="Very Poor"><div class="emoji">😡</div><span>Very Poor</span></label>
-<label class="emoji-card"><input type="radio" name="customer_service" value="Poor"><div class="emoji">🙁</div><span>Poor</span></label>
-<label class="emoji-card"><input type="radio" name="customer_service" value="Average"><div class="emoji">😐</div><span>Average</span></label>
-<label class="emoji-card"><input type="radio" name="customer_service" value="Good"><div class="emoji">🙂</div><span>Good</span></label>
-<label class="emoji-card"><input type="radio" name="customer_service" value="Excellent"><div class="emoji">🤩</div><span>Excellent</span></label>
-</div>
-</div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const scriptURL = "https://script.google.com/macros/s/AKfycbwVD0Rt1PdxrgSZ8AFfAxauML947NXbuHDV5iA65azyMU6cOMqsc3JJ0LCA4oz9TsR1/exec";
+            const form = document.getElementById("feedbackForm");
+            const cards = document.querySelectorAll(".emoji-card");
+            const progressFill = document.getElementById("progressFill");
+            const progressText = document.getElementById("progressText");
+            const mainContent = document.getElementById("mainContent");
+            const thankYou = document.getElementById("thankyou");
 
-<!-- OVERALL -->
-<div class="question">
-<h3>Rate Overall Experience</h3>
-<div class="emoji-grid">
-<label class="emoji-card"><input type="radio" name="overall" value="Very Poor"><div class="emoji">😡</div><span>Very Poor</span></label>
-<label class="emoji-card"><input type="radio" name="overall" value="Poor"><div class="emoji">🙁</div><span>Poor</span></label>
-<label class="emoji-card"><input type="radio" name="overall" value="Average"><div class="emoji">😐</div><span>Average</span></label>
-<label class="emoji-card"><input type="radio" name="overall" value="Good"><div class="emoji">🙂</div><span>Good</span></label>
-<label class="emoji-card"><input type="radio" name="overall" value="Excellent"><div class="emoji">🤩</div><span>Excellent</span></label>
-</div>
-</div>
+            let isSubmitting = false;
+            const totalQuestions = 5;
 
-<!-- RECOMMEND -->
-<div class="question">
-<h3>Would you recommend UPPC?</h3>
-<div class="emoji-grid">
-<label class="emoji-card"><input type="radio" name="recommend" value="No"><div class="emoji">❌</div><span>No</span></label>
-<label class="emoji-card"><input type="radio" name="recommend" value="Maybe"><div class="emoji">🤔</div><span>Maybe</span></label>
-<label class="emoji-card"><input type="radio" name="recommend" value="Yes"><div class="emoji">✅</div><span>Yes</span></label>
-</div>
-</div>
+            // Update progress bar
+            function updateProgress() {
+                const checked = document.querySelectorAll("input[type='radio']:checked").length;
+                const percentage = (checked / totalQuestions) * 100;
+                progressFill.style.width = percentage + "%";
+                progressText.textContent = Math.round(percentage) + "% Complete";
+            }
 
-</form>
-</div>
+            // Card click handler - instant selection
+            cards.forEach(card => {
+                card.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const group = card.closest(".emoji-grid");
+                    const input = card.querySelector("input");
+                    
+                    // Remove selected from all cards in group instantly
+                    group.querySelectorAll(".emoji-card").forEach(c => {
+                        c.classList.remove("selected");
+                    });
 
-<!-- THANK YOU -->
-<div id="thankyou">
-  <div id="thankEmoji">😊</div>
-  <h2 id="thankMessage"></h2>
-</div>
+                    // Add selected class immediately for instant animation
+                    card.classList.add("selected");
+                    input.checked = true;
 
-</div>
+                    updateProgress();
 
-<script>
-document.addEventListener("DOMContentLoaded", function(){
+                    // Submit when last question is answered (no delay)
+                    if (input.name === "recommend") {
+                        autoSubmit();
+                    }
+                });
 
-const scriptURL="https://script.google.com/macros/s/AKfycbwVD0Rt1PdxrgSZ8AFfAxauML947NXbuHDV5iA65azyMU6cOMqsc3JJ0LCA4oz9TsR1/exec";
+                // Keyboard support
+                card.addEventListener("keypress", function(e) {
+                    if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        card.click();
+                    }
+                });
+            });
 
-const form=document.getElementById("feedbackForm");
-const cards=document.querySelectorAll(".emoji-card");
+            function autoSubmit() {
+                if (isSubmitting) return;
+                isSubmitting = true;
 
-let isSubmitting=false;
+                const getVal = name =>
+                    document.querySelector(`input[name="${name}"]:checked`)?.value || "";
 
-/* CLICK HANDLER (STANDARDIZED) */
-cards.forEach(card=>{
-  card.addEventListener("click",function(){
+                const params = new URLSearchParams({
+                    product_quality: getVal("product_quality"),
+                    service_quality: getVal("service_quality"),
+                    customer_service: getVal("customer_service"),
+                    overall: getVal("overall"),
+                    recommend: getVal("recommend")
+                });
 
-    const group = card.closest(".emoji-grid");
+                // Send to Google Sheets
+                const img = new Image();
+                img.src = scriptURL + "?" + params.toString();
 
-    group.querySelectorAll(".emoji-card").forEach(c=>{
-      c.classList.remove("selected");
-    });
+                showThankYou(getVal("overall"));
+                setTimeout(fullReset, 3500);
+            }
 
-    card.classList.add("selected");
+            function showThankYou(rating) {
+                const emoji = document.getElementById("thankEmoji");
+                const message = document.getElementById("thankMessage");
 
-    const input = card.querySelector("input");
-    input.checked = true;
+                const thankYouMessages = {
+                    "Very Poor": { emoji: "😡", message: "We apologize. UPPC commits to improvement." },
+                    "Poor": { emoji: "🙁", message: "Your feedback helps UPPC improve. Thank you." },
+                    "Average": { emoji: "😐", message: "Thank you for your honest feedback." },
+                    "Good": { emoji: "🙂", message: "We're glad you're satisfied with UPPC." },
+                    "Excellent": { emoji: "🤩", message: "Outstanding! UPPC thanks you!" },
+                    "": { emoji: "😊", message: "Thank you for supporting UPPC with your feedback" }
+                };
 
-    // SUBMIT ONLY WHEN LAST QUESTION ANSWERED
-    if(input.name==="recommend"){
-      setTimeout(autoSubmit,150);
-    }
-  });
-});
+                const response = thankYouMessages[rating] || thankYouMessages[""];
 
-function autoSubmit(){
+                emoji.innerHTML = response.emoji;
+                message.innerHTML = response.message;
 
-  if(isSubmitting) return;
-  isSubmitting=true;
+                mainContent.style.display = "none";
+                thankYou.style.display = "block";
+            }
 
-  const getVal = name =>
-    document.querySelector(`input[name="${name}"]:checked`)?.value || "";
+            function fullReset() {
+                form.reset();
+                cards.forEach(c => c.classList.remove("selected"));
+                progressFill.style.width = "0%";
+                progressText.textContent = "0% Complete";
+                thankYou.style.display = "none";
+                mainContent.style.display = "block";
+                isSubmitting = false;
+            }
 
-  const params = new URLSearchParams({
-    product_quality: getVal("product_quality"),
-    service_quality: getVal("service_quality"),
-    customer_service: getVal("customer_service"),
-    overall: getVal("overall"),
-    recommend: getVal("recommend")
-  });
-
-  // RELIABLE SEND
-  const img = new Image();
-  img.src = scriptURL + "?" + params.toString();
-
-  showThankYou(getVal("overall"));
-
-  setTimeout(fullReset,3000);
-}
-
-function showThankYou(rating){
-
-  const emoji=document.getElementById("thankEmoji");
-  const message=document.getElementById("thankMessage");
-
-  let emo="😊";
-  let msg="Thanks for sharing your valuable feedback with us";
-
-  if(rating==="Very Poor"){ emo="😡"; msg="We’re sorry. We will improve."; }
-  else if(rating==="Poor"){ emo="🙁"; msg="We’ll improve."; }
-  else if(rating==="Average"){ emo="😐"; msg="Thank you."; }
-  else if(rating==="Good"){ emo="🙂"; msg="Glad you had a good experience."; }
-  else if(rating==="Excellent"){ emo="🤩"; msg="Fantastic! Thank you!"; }
-
-  emoji.innerHTML=emo;
-  message.innerHTML=msg;
-
-  document.getElementById("mainContent").style.display="none";
-  document.getElementById("thankyou").style.display="block";
-}
-
-function fullReset(){
-
-  form.reset();
-
-  document.querySelectorAll(".emoji-card").forEach(c=>{
-    c.classList.remove("selected");
-  });
-
-  document.getElementById("thankyou").style.display="none";
-  document.getElementById("mainContent").style.display="block";
-
-  isSubmitting=false;
-}
-
-});
-</script>
-
+            // Initial progress update
+            updateProgress();
+        });
+    </script>
 </body>
 </html>
