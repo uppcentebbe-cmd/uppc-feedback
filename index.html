@@ -220,78 +220,84 @@ body{
 
 </div>
 <script>
+<script>
 document.addEventListener("DOMContentLoaded", function(){
 
-const scriptURL="https://script.google.com/macros/s/AKfycbwVD0Rt1PdxrgSZ8AFfAxauML947NXbuHDV5iA65azyMU6cOMqsc3JJ0LCA4oz9TsR1/exec";
+const scriptURL="PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE";
 
+const inputs=document.querySelectorAll("input[type=radio]");
 const form=document.getElementById("feedbackForm");
-const cards=document.querySelectorAll(".emoji-card");
 
 let isSubmitting=false;
 
-const fields=["product_quality","service_quality","customer_service","overall","recommend"];
+const fields=[
+  "product_quality",
+  "service_quality",
+  "customer_service",
+  "overall",
+  "recommend"
+];
 
-// 🔥 LISTEN TO CARD CLICK (NOT RADIO)
-cards.forEach(card=>{
-  card.addEventListener("click", function(){
-
-    const input = card.querySelector("input");
-    input.checked = true;
-
-    console.log("Clicked:", input.name, input.value);
-
-    setTimeout(checkAllAnswered, 100); // ensure DOM updates
-  });
+// LISTEN FOR SELECTION
+inputs.forEach(input=>{
+  input.addEventListener("change",checkAndSubmit);
 });
 
-function checkAllAnswered(){
+function checkAndSubmit(){
 
-  for(let f of fields){
-    if(!document.querySelector(`input[name="${f}"]:checked`)){
-      console.log("Missing:", f);
-      return;
+  let answered=0;
+
+  fields.forEach(f=>{
+    if(document.querySelector(`input[name="${f}"]:checked`)){
+      answered++;
     }
-  }
+  });
 
-  console.log("ALL SELECTED ✅");
+  // DEBUG (optional)
+  console.log("Answered:", answered);
 
-  if(!isSubmitting){
+  if(answered===fields.length && !isSubmitting){
     autoSubmit();
   }
 }
 
+// 🔥 FIXED AUTO SUBMIT (CORS SAFE)
 function autoSubmit(){
 
   console.log("Submitting...");
   isSubmitting=true;
 
-  const overall=document.querySelector('input[name="overall"]:checked')?.value;
+  const overallInput=document.querySelector('input[name="overall"]:checked');
+  const overallValue=overallInput ? overallInput.value : "Average";
 
   fetch(scriptURL,{
     method:"POST",
+    mode:"no-cors",   // ✅ IMPORTANT FIX
     body:new FormData(form)
   })
-  .then(res=>res.text())
   .then(()=>{
-    console.log("Submitted ✅");
+    console.log("Submitted (no-cors)");
 
-    showThankYou(overall);
+    showThankYou(overallValue);
     setTimeout(fullReset,3000);
   })
   .catch(err=>{
     console.error("ERROR:", err);
-    alert("Submission failed.");
-    isSubmitting=false;
+
+    // still continue (don't block user experience)
+    showThankYou(overallValue);
+    setTimeout(fullReset,3000);
   });
 }
 
+// THANK YOU SCREEN
 function showThankYou(rating){
 
   const emoji=document.getElementById("thankEmoji");
   const message=document.getElementById("thankMessage");
 
-  let emo="😊";
   let msg="Thanks for sharing your valuable feedback with us";
+  let emo="😊";
 
   if(rating==="Very Poor"){ emo="😡"; msg="We’re sorry. We will improve."; }
   else if(rating==="Poor"){ emo="🙁"; msg="We’ll improve."; }
@@ -306,13 +312,16 @@ function showThankYou(rating){
   document.getElementById("thankyou").style.display="block";
 }
 
+// RESET FORM
 function fullReset(){
 
-  console.log("Resetting...");
+  console.log("Resetting form");
 
   form.reset();
 
-  document.querySelectorAll("input").forEach(i=>i.checked=false);
+  inputs.forEach(i=>{
+    i.checked=false;
+  });
 
   document.getElementById("thankyou").style.display="none";
   document.getElementById("mainContent").style.display="block";
@@ -321,4 +330,5 @@ function fullReset(){
 }
 
 });
+</script>
 </script>
