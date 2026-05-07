@@ -62,6 +62,7 @@ body{
   gap:16px;
 }
 
+/* CARD */
 .emoji-card{
   position:relative;
   background:#fff4cc;
@@ -87,7 +88,7 @@ body{
   font-size:16px;
 }
 
-/* GLASSY */
+/* GLASSY EFFECT */
 .emoji-card::after{
   content:"";
   position:absolute;
@@ -209,7 +210,6 @@ body{
 </div>
 
 </form>
-
 </div>
 
 <!-- THANK YOU -->
@@ -219,85 +219,69 @@ body{
 </div>
 
 </div>
-<script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
 const scriptURL="https://script.google.com/macros/s/AKfycbwVD0Rt1PdxrgSZ8AFfAxauML947NXbuHDV5iA65azyMU6cOMqsc3JJ0LCA4oz9TsR1/exec";
 
-const inputs=document.querySelectorAll("input[type=radio]");
 const form=document.getElementById("feedbackForm");
+const cards=document.querySelectorAll(".emoji-card");
 
 let isSubmitting=false;
 
-const fields=[
-  "product_quality",
-  "service_quality",
-  "customer_service",
-  "overall",
-  "recommend"
-];
+const fields=["product_quality","service_quality","customer_service","overall","recommend"];
 
-// LISTEN FOR SELECTION
-inputs.forEach(input=>{
-  input.addEventListener("change",checkAndSubmit);
+cards.forEach(card=>{
+  card.addEventListener("click", function(){
+
+    const input=card.querySelector("input");
+    input.checked=true;
+
+    setTimeout(checkAllAnswered,100);
+  });
 });
 
-function checkAndSubmit(){
+function checkAllAnswered(){
 
-  let answered=0;
-
-  fields.forEach(f=>{
-    if(document.querySelector(`input[name="${f}"]:checked`)){
-      answered++;
+  for(let f of fields){
+    if(!document.querySelector(`input[name="${f}"]:checked`)){
+      return;
     }
-  });
+  }
 
-  // DEBUG (optional)
-  console.log("Answered:", answered);
-
-  if(answered===fields.length && !isSubmitting){
+  if(!isSubmitting){
     autoSubmit();
   }
 }
 
-// 🔥 FIXED AUTO SUBMIT (CORS SAFE)
 function autoSubmit(){
 
-  console.log("Submitting...");
   isSubmitting=true;
 
   const overallInput=document.querySelector('input[name="overall"]:checked');
   const overallValue=overallInput ? overallInput.value : "Average";
 
-  fetch(scriptURL,{
-    method:"POST",
-    mode:"no-cors",   // ✅ IMPORTANT FIX
-    body:new FormData(form)
-  })
-  .then(()=>{
-    console.log("Submitted (no-cors)");
+  // FIRE & FORGET
+  try{
+    fetch(scriptURL,{
+      method:"POST",
+      mode:"no-cors",
+      body:new FormData(form)
+    });
+  }catch(e){}
 
-    showThankYou(overallValue);
-    setTimeout(fullReset,3000);
-  })
-  .catch(err=>{
-    console.error("ERROR:", err);
-
-    // still continue (don't block user experience)
-    showThankYou(overallValue);
-    setTimeout(fullReset,3000);
-  });
+  showThankYou(overallValue);
+  setTimeout(fullReset,3000);
 }
 
-// THANK YOU SCREEN
 function showThankYou(rating){
 
   const emoji=document.getElementById("thankEmoji");
   const message=document.getElementById("thankMessage");
 
-  let msg="Thanks for sharing your valuable feedback with us";
   let emo="😊";
+  let msg="Thanks for sharing your valuable feedback with us";
 
   if(rating==="Very Poor"){ emo="😡"; msg="We’re sorry. We will improve."; }
   else if(rating==="Poor"){ emo="🙁"; msg="We’ll improve."; }
@@ -312,16 +296,11 @@ function showThankYou(rating){
   document.getElementById("thankyou").style.display="block";
 }
 
-// RESET FORM
 function fullReset(){
-
-  console.log("Resetting form");
 
   form.reset();
 
-  inputs.forEach(i=>{
-    i.checked=false;
-  });
+  document.querySelectorAll("input").forEach(i=>i.checked=false);
 
   document.getElementById("thankyou").style.display="none";
   document.getElementById("mainContent").style.display="block";
@@ -331,4 +310,6 @@ function fullReset(){
 
 });
 </script>
-</script>
+
+</body>
+</html>
