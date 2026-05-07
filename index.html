@@ -39,9 +39,10 @@ body{
   display:flex;
   justify-content:space-between;
   background:#eef3f7;
-  padding:8px 15px;
+  padding:10px 15px;
   border-radius:10px;
-  margin:8px 0;
+  margin:10px 0;
+  font-weight:500;
 }
 
 /* QUESTION */
@@ -71,13 +72,15 @@ body{
   padding:18px;
   cursor:pointer;
   border:2px solid transparent;
+  transition:all 0.2s ease;
 }
 
 .emoji-card input{display:none;}
 
 .emoji{
-  font-size:90px;
+  font-size:100px;
   transition:0.2s;
+  filter: drop-shadow(0 8px 12px rgba(255,140,0,0.4));
 }
 
 .emoji-card span{
@@ -87,17 +90,13 @@ body{
 
 /* SELECTED */
 .emoji-card input:checked + .emoji{
-  transform:scale(1.25);
+  transform:scale(1.35);
 }
 
 .emoji-card:has(input:checked){
   background:#ffe5e5;
-  border:2px solid red;
+  border:2px solid #ff4d4d;
 }
-
-/* FADE */
-.fade-out{opacity:0;transition:0.4s;}
-.fade-in{opacity:1;transition:0.4s;}
 
 /* THANK YOU */
 #thankyou{
@@ -108,12 +107,11 @@ body{
 
 #thankEmoji{
   font-size:100px;
-  animation:pop 0.4s ease;
+  margin-bottom:10px;
 }
 
-@keyframes pop{
-  0%{transform:scale(0.6);opacity:0;}
-  100%{transform:scale(1);opacity:1;}
+#thankMessage{
+  font-size:24px;
 }
 </style>
 </head>
@@ -208,8 +206,8 @@ body{
 <script>
 const scriptURL="https://script.google.com/macros/s/AKfycbwVD0Rt1PdxrgSZ8AFfAxauML947NXbuHDV5iA65azyMU6cOMqsc3JJ0LCA4oz9TsR1/exec";
 
-const inputs=document.querySelectorAll("input[type=radio]");
 const form=document.getElementById("feedbackForm");
+const inputs=document.querySelectorAll("input[type=radio]");
 
 let isSubmitting=false;
 
@@ -222,16 +220,19 @@ const fields=[
 ];
 
 inputs.forEach(input=>{
-  input.addEventListener("change",checkAndSubmit);
+  input.addEventListener("change",checkAllAnswered);
 });
 
-function checkAndSubmit(){
-  let answered=0;
-  fields.forEach(f=>{
-    if(document.querySelector(`input[name="${f}"]:checked`)) answered++;
+function checkAllAnswered(){
+  let allAnswered=true;
+
+  fields.forEach(name=>{
+    if(!document.querySelector(`input[name="${name}"]:checked`)){
+      allAnswered=false;
+    }
   });
 
-  if(answered===fields.length && !isSubmitting){
+  if(allAnswered && !isSubmitting){
     autoSubmit();
   }
 }
@@ -239,14 +240,20 @@ function checkAndSubmit(){
 function autoSubmit(){
   isSubmitting=true;
 
-  const overallValue=document.querySelector('input[name="overall"]:checked').value;
+  const overallValue=document.querySelector('input[name="overall"]:checked')?.value;
 
   fetch(scriptURL,{
     method:"POST",
     body:new FormData(form)
-  }).then(()=>{
+  })
+  .then(res=>res.text())
+  .then(()=>{
     showThankYou(overallValue);
     setTimeout(fullReset,3000);
+  })
+  .catch(err=>{
+    console.error("Error:", err);
+    isSubmitting=false;
   });
 }
 
@@ -254,14 +261,14 @@ function showThankYou(rating){
   const emoji=document.getElementById("thankEmoji");
   const message=document.getElementById("thankMessage");
 
-  let msg="Thanks for sharing your valuable feedback with us";
   let emo="😊";
+  let msg="Thanks for sharing your valuable feedback with us";
 
   if(rating==="Very Poor"){ emo="😡"; msg="We’re sorry. We will improve."; }
-  else if(rating==="Poor"){ emo="🙁"; msg="We’ll work on improving."; }
-  else if(rating==="Average"){ emo="😐"; msg="Thank you for your feedback."; }
-  else if(rating==="Good"){ emo="🙂"; msg="Thank you! Glad you had a good experience."; }
-  else if(rating==="Excellent"){ emo="🤩"; msg="Fantastic! Thank you for your feedback!"; }
+  else if(rating==="Poor"){ emo="🙁"; msg="We’ll improve."; }
+  else if(rating==="Average"){ emo="😐"; msg="Thank you."; }
+  else if(rating==="Good"){ emo="🙂"; msg="Glad you had a good experience."; }
+  else if(rating==="Excellent"){ emo="🤩"; msg="Fantastic! Thank you!"; }
 
   emoji.innerHTML=emo;
   message.innerHTML=msg;
@@ -283,6 +290,3 @@ function fullReset(){
 
 </body>
 </html>
-
-<script>
-
