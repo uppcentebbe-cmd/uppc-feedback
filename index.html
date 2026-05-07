@@ -19,13 +19,11 @@ body{
   background:#fff;
   border-radius:16px;
   padding:15px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.4);
 }
 
 /* HEADER */
 .header{
   text-align:center;
-  margin-bottom:8px;
   padding:12px 0;
   background:rgba(0,0,0,0.65);
   backdrop-filter:blur(10px);
@@ -45,9 +43,6 @@ body{
   border-radius:10px;
   margin:8px 0;
 }
-
-.intro .title{font-weight:600;}
-.intro .sub{font-size:13px;color:#666;}
 
 /* QUESTION */
 .question{
@@ -100,35 +95,42 @@ body{
   border:2px solid red;
 }
 
-/* THANK YOU SCREEN */
+/* FADE */
+.fade-out{opacity:0;transition:0.4s;}
+.fade-in{opacity:1;transition:0.4s;}
+
+/* THANK YOU */
 #thankyou{
   display:none;
   text-align:center;
   padding:60px 20px;
 }
 
-#thankyou .emoji{
+#thankEmoji{
   font-size:100px;
+  animation:pop 0.4s ease;
 }
 
-#thankyou h2{
-  font-size:26px;
-  margin-top:15px;
+@keyframes pop{
+  0%{transform:scale(0.6);opacity:0;}
+  100%{transform:scale(1);opacity:1;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="mainContent">
+<div class="container">
+
+<div id="mainContent">
 
 <div class="header">
   <img src="UPPC-LOGO.png" class="logo">
 </div>
 
 <div class="intro">
-  <span class="title">Share your feedback</span>
-  <span class="sub">Help us improve</span>
+  <span>Share your feedback</span>
+  <span>Help us improve</span>
 </div>
 
 <form id="feedbackForm">
@@ -145,7 +147,51 @@ body{
 </div>
 </div>
 
-<!-- Repeat same structure for all other sections -->
+<!-- 2 -->
+<div class="question">
+<h3>Rate Service Quality</h3>
+<div class="emoji-grid">
+<label class="emoji-card"><input type="radio" name="service_quality" value="Very Poor"><div class="emoji">😡</div><span>Very Poor</span></label>
+<label class="emoji-card"><input type="radio" name="service_quality" value="Poor"><div class="emoji">🙁</div><span>Poor</span></label>
+<label class="emoji-card"><input type="radio" name="service_quality" value="Average"><div class="emoji">😐</div><span>Average</span></label>
+<label class="emoji-card"><input type="radio" name="service_quality" value="Good"><div class="emoji">🙂</div><span>Good</span></label>
+<label class="emoji-card"><input type="radio" name="service_quality" value="Excellent"><div class="emoji">🤩</div><span>Excellent</span></label>
+</div>
+</div>
+
+<!-- 3 -->
+<div class="question">
+<h3>Rate Customer Service</h3>
+<div class="emoji-grid">
+<label class="emoji-card"><input type="radio" name="customer_service" value="Very Poor"><div class="emoji">😡</div><span>Very Poor</span></label>
+<label class="emoji-card"><input type="radio" name="customer_service" value="Poor"><div class="emoji">🙁</div><span>Poor</span></label>
+<label class="emoji-card"><input type="radio" name="customer_service" value="Average"><div class="emoji">😐</div><span>Average</span></label>
+<label class="emoji-card"><input type="radio" name="customer_service" value="Good"><div class="emoji">🙂</div><span>Good</span></label>
+<label class="emoji-card"><input type="radio" name="customer_service" value="Excellent"><div class="emoji">🤩</div><span>Excellent</span></label>
+</div>
+</div>
+
+<!-- 4 -->
+<div class="question">
+<h3>Rate Overall Experience</h3>
+<div class="emoji-grid">
+<label class="emoji-card"><input type="radio" name="overall" value="Very Poor"><div class="emoji">😡</div><span>Very Poor</span></label>
+<label class="emoji-card"><input type="radio" name="overall" value="Poor"><div class="emoji">🙁</div><span>Poor</span></label>
+<label class="emoji-card"><input type="radio" name="overall" value="Average"><div class="emoji">😐</div><span>Average</span></label>
+<label class="emoji-card"><input type="radio" name="overall" value="Good"><div class="emoji">🙂</div><span>Good</span></label>
+<label class="emoji-card"><input type="radio" name="overall" value="Excellent"><div class="emoji">🤩</div><span>Excellent</span></label>
+</div>
+</div>
+
+<!-- 5 -->
+<div class="question">
+<h3>Would you recommend UPPC?</h3>
+<div class="emoji-grid">
+<label class="emoji-card"><input type="radio" name="recommend" value="No"><div class="emoji">❌</div><span>No</span></label>
+<label class="emoji-card"><input type="radio" name="recommend" value="Maybe"><div class="emoji">🤔</div><span>Maybe</span></label>
+<label class="emoji-card"><input type="radio" name="recommend" value="Yes"><div class="emoji">✅</div><span>Yes</span></label>
+</div>
+</div>
 
 </form>
 
@@ -153,59 +199,90 @@ body{
 
 <!-- THANK YOU -->
 <div id="thankyou">
-  <div class="emoji">🎉😊</div>
-  <h2>Thanks for sharing your valuable feedback with us</h2>
+  <div id="thankEmoji">😊</div>
+  <h2 id="thankMessage"></h2>
+</div>
+
 </div>
 
 <script>
-const scriptURL=""https://script.google.com/macros/s/AKfycbz8N639PngHX28Ilyr4f9lu9-WSlNBrJ3lqf4yEdHgv0ImLNWTQoAWu3DtGgQPLOBNd/exec";";
+const scriptURL="https://script.google.com/macros/s/AKfycbz8N639PngHX28Ilyr4f9lu9-WSlNBrJ3lqf4yEdHgv0ImLNWTQoAWu3DtGgQPLOBNd/exec";
 
 const inputs=document.querySelectorAll("input[type=radio]");
 const form=document.getElementById("feedbackForm");
 
-const fields=["product_quality","service_quality","customer_service","overall","recommend"];
+let isSubmitting=false;
+
+const fields=[
+  "product_quality",
+  "service_quality",
+  "customer_service",
+  "overall",
+  "recommend"
+];
 
 inputs.forEach(input=>{
-  input.addEventListener("change",()=>{
-    let answered=0;
-
-    fields.forEach(f=>{
-      if(document.querySelector(`input[name="${f}"]:checked`)){
-        answered++;
-      }
-    });
-
-    // 🚀 AUTO SUBMIT
-    if(answered===fields.length){
-      autoSubmit();
-    }
-  });
+  input.addEventListener("change",checkAndSubmit);
 });
 
+function checkAndSubmit(){
+  let answered=0;
+  fields.forEach(f=>{
+    if(document.querySelector(`input[name="${f}"]:checked`)) answered++;
+  });
+
+  if(answered===fields.length && !isSubmitting){
+    autoSubmit();
+  }
+}
+
 function autoSubmit(){
+  isSubmitting=true;
+
+  const overallValue=document.querySelector('input[name="overall"]:checked').value;
+
   fetch(scriptURL,{
     method:"POST",
     body:new FormData(form)
   }).then(()=>{
-    
-    document.getElementById("mainContent").style.display="none";
-    document.getElementById("thankyou").style.display="block";
-
-    // 🔄 RESET AFTER 3 SECONDS
-    setTimeout(()=>{
-      form.reset();
-      document.getElementById("thankyou").style.display="none";
-      document.getElementById("mainContent").style.display="block";
-    },3000);
-
+    showThankYou(overallValue);
+    setTimeout(fullReset,3000);
   });
+}
+
+function showThankYou(rating){
+  const emoji=document.getElementById("thankEmoji");
+  const message=document.getElementById("thankMessage");
+
+  let msg="Thanks for sharing your valuable feedback with us";
+  let emo="😊";
+
+  if(rating==="Very Poor"){ emo="😡"; msg="We’re sorry. We will improve."; }
+  else if(rating==="Poor"){ emo="🙁"; msg="We’ll work on improving."; }
+  else if(rating==="Average"){ emo="😐"; msg="Thank you for your feedback."; }
+  else if(rating==="Good"){ emo="🙂"; msg="Thank you! Glad you had a good experience."; }
+  else if(rating==="Excellent"){ emo="🤩"; msg="Fantastic! Thank you for your feedback!"; }
+
+  emoji.innerHTML=emo;
+  message.innerHTML=msg;
+
+  document.getElementById("mainContent").style.display="none";
+  document.getElementById("thankyou").style.display="block";
+}
+
+function fullReset(){
+  form.reset();
+  inputs.forEach(i=>i.checked=false);
+
+  document.getElementById("thankyou").style.display="none";
+  document.getElementById("mainContent").style.display="block";
+
+  isSubmitting=false;
 }
 </script>
 
 </body>
 </html>
 
-
-
-
+<script>
 
