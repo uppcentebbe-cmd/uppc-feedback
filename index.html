@@ -22,7 +22,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background: linear-gradient(135deg, rgba(227, 25, 55, 0.98) 0%, rgba(184, 21, 43, 0.98) 50%, rgba(255, 71, 87, 0.95) 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #ffffff 50%, #fafbfc 100%);
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -41,9 +41,9 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(252, 209, 22, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(227, 25, 55, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+                radial-gradient(circle at 20% 50%, rgba(227, 25, 55, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(252, 209, 22, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
             pointer-events: none;
             z-index: 0;
         }
@@ -68,16 +68,16 @@
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.97);
-            border-radius: 32px;
-            padding: 50px 45px;
+            background: #ffffff;
+            border-radius: 36px;
+            padding: 55px 50px;
             box-shadow: 
-                0 25px 80px rgba(0, 0, 0, 0.25),
-                0 0 60px rgba(227, 25, 55, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+                0 12px 40px rgba(0, 0, 0, 0.08),
+                0 0 80px rgba(227, 25, 55, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
             animation: slideUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
             backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1.5px solid rgba(227, 25, 55, 0.08);
             position: relative;
         }
 
@@ -109,11 +109,17 @@
         /* HEADER */
         .header {
             text-align: center;
-            margin-bottom: 45px;
-            padding-bottom: 30px;
-            border-bottom: 3px solid var(--uppc-yellow);
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 3px solid #FCD116;
             position: relative;
             animation: fadeInDown 0.8s ease-out 0.1s both;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 32px 40px;
+            box-shadow: 0 4px 20px rgba(227, 25, 55, 0.08);
+            margin: -55px -50px 48px -50px;
+            padding: 40px 50px 32px 50px;
         }
 
         @keyframes fadeInDown {
@@ -134,40 +140,53 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--uppc-red) 0%, var(--uppc-yellow) 50%, var(--uppc-red) 100%);
+            background: linear-gradient(90deg, #E31937 0%, #FCD116 50%, #E31937 100%);
         }
 
         .logo {
-            max-width: 380px;
+            max-width: 420px;
             height: auto;
-            margin-bottom: 25px;
-            filter: drop-shadow(0 12px 24px rgba(227, 25, 55, 0.35));
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin-bottom: 28px;
+            filter: drop-shadow(0 14px 28px rgba(227, 25, 55, 0.3));
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: logoZoomIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+        }
+
+        @keyframes logoZoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .logo:hover {
-            transform: scale(1.06) translateY(-2px);
-            filter: drop-shadow(0 16px 32px rgba(227, 25, 55, 0.45));
+            transform: scale(1.08) translateY(-3px);
+            filter: drop-shadow(0 18px 36px rgba(227, 25, 55, 0.4));
         }
 
         .header-text {
             color: var(--uppc-black);
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 10px;
+            font-size: 34px;
+            font-weight: 900;
+            margin-bottom: 12px;
             letter-spacing: -0.8px;
-            background: linear-gradient(135deg, var(--uppc-red) 0%, var(--uppc-dark-red) 100%);
+            background: linear-gradient(135deg, #E31937 0%, #B8152B 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 2px 4px rgba(227, 25, 55, 0.1);
         }
 
         .header-subtext {
-            color: var(--uppc-red);
-            font-size: 17px;
-            font-weight: 600;
+            color: #E31937;
+            font-size: 18px;
+            font-weight: 700;
             letter-spacing: 0.3px;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         /* PROGRESS BAR */
@@ -188,32 +207,34 @@
         }
 
         .progress-bar {
-            height: 10px;
-            background: linear-gradient(90deg, rgba(227, 25, 55, 0.12) 0%, rgba(252, 209, 22, 0.12) 100%);
-            border-radius: 12px;
+            height: 12px;
+            background: linear-gradient(90deg, rgba(227, 25, 55, 0.15) 0%, rgba(252, 209, 22, 0.15) 100%);
+            border-radius: 14px;
             overflow: hidden;
-            border: 1.5px solid var(--uppc-yellow);
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+            border: 2px solid rgba(252, 209, 22, 0.8);
+            box-shadow: 
+                inset 0 2px 4px rgba(0, 0, 0, 0.06),
+                0 4px 12px rgba(227, 25, 55, 0.12);
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--uppc-red) 0%, var(--uppc-yellow) 45%, var(--uppc-yellow) 55%, var(--uppc-light-red) 100%);
+            background: linear-gradient(90deg, #E31937 0%, #FCD116 40%, #FCD116 60%, #FF4757 100%);
             width: 0%;
             transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border-radius: 12px;
+            border-radius: 14px;
             box-shadow: 
-                0 0 15px rgba(227, 25, 55, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+                0 0 20px rgba(227, 25, 55, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
         }
 
         .progress-text {
-            font-size: 13px;
-            color: var(--uppc-dark-red);
-            margin-top: 10px;
+            font-size: 14px;
+            color: #E31937;
+            margin-top: 12px;
             text-align: right;
-            font-weight: 700;
-            letter-spacing: 0.2px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
         }
 
         /* QUESTION SECTION */
@@ -230,30 +251,30 @@
         .question-section:nth-child(5) { animation-delay: 0.5s; }
 
         .question-title {
-            font-size: 19px;
-            font-weight: 800;
-            color: var(--uppc-black);
-            margin-bottom: 22px;
+            font-size: 20px;
+            font-weight: 900;
+            color: #1a1a1a;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
-            letter-spacing: -0.4px;
+            letter-spacing: -0.5px;
         }
 
         .question-number {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, var(--uppc-red) 0%, var(--uppc-dark-red) 100%);
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #E31937 0%, #B8152B 100%);
             color: white;
             border-radius: 50%;
-            margin-right: 14px;
-            font-size: 18px;
-            font-weight: 800;
+            margin-right: 16px;
+            font-size: 20px;
+            font-weight: 900;
             box-shadow: 
-                0 8px 20px rgba(227, 25, 55, 0.45),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                0 10px 24px rgba(227, 25, 55, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
             flex-shrink: 0;
             letter-spacing: -0.2px;
         }
@@ -271,17 +292,17 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 24px 18px;
-            background: linear-gradient(135deg, rgba(252, 209, 22, 0.1) 0%, rgba(227, 25, 55, 0.06) 100%);
-            border: 2.5px solid var(--uppc-yellow);
-            border-radius: 20px;
+            padding: 26px 20px;
+            background: linear-gradient(135deg, rgba(252, 209, 22, 0.15) 0%, rgba(227, 25, 55, 0.08) 100%);
+            border: 2.8px solid #FCD116;
+            border-radius: 22px;
             cursor: pointer;
             transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             overflow: hidden;
             box-shadow: 
-                0 4px 12px rgba(227, 25, 55, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+                0 6px 16px rgba(227, 25, 55, 0.14),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .emoji-card::before {
@@ -314,11 +335,11 @@
         }
 
         .emoji-card:hover {
-            border-color: var(--uppc-red);
-            transform: translateY(-8px);
+            border-color: #E31937;
+            transform: translateY(-10px);
             box-shadow: 
-                0 16px 32px rgba(227, 25, 55, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+                0 18px 40px rgba(227, 25, 55, 0.22),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
             background: linear-gradient(135deg, rgba(227, 25, 55, 0.12) 0%, rgba(252, 209, 22, 0.1) 100%);
         }
 
@@ -331,32 +352,32 @@
         }
 
         .emoji {
-            font-size: 54px;
-            margin-bottom: 14px;
+            font-size: 58px;
+            margin-bottom: 16px;
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: block;
             line-height: 1;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
         }
 
         .emoji-label {
-            font-size: 14px;
-            font-weight: 800;
-            color: var(--uppc-black);
+            font-size: 15px;
+            font-weight: 900;
+            color: #1a1a1a;
             text-align: center;
-            letter-spacing: 0.4px;
+            letter-spacing: 0.5px;
             text-transform: capitalize;
         }
 
         /* SELECTED STATE - Emoji zooms IN with glow */
         .emoji-card.selected {
-            background: linear-gradient(135deg, var(--uppc-red) 0%, var(--uppc-dark-red) 100%);
-            border-color: var(--uppc-yellow);
+            background: linear-gradient(135deg, #E31937 0%, #B8152B 100%);
+            border-color: #FCD116;
             color: white;
             box-shadow: 
-                0 20px 50px rgba(227, 25, 55, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.25),
-                0 0 40px rgba(252, 209, 22, 0.4);
+                0 16px 48px rgba(227, 25, 55, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                0 0 50px rgba(252, 209, 22, 0.4);
             transform: translateY(-4px);
             animation: pulse 0.5s ease-out;
         }
@@ -374,7 +395,7 @@
         .emoji-card.selected .emoji {
             transform: scale(1.8) rotate(5deg);
             animation: zoomIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            filter: drop-shadow(0 8px 16px rgba(255, 255, 255, 0.4));
+            filter: drop-shadow(0 10px 20px rgba(255, 255, 255, 0.5));
         }
 
         @keyframes zoomIn {
@@ -384,10 +405,10 @@
         }
 
         .emoji-card.selected .emoji-label {
-            color: var(--uppc-yellow);
+            color: #FCD116;
             font-weight: 900;
-            letter-spacing: 0.6px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.8px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
         }
 
         /* THANK YOU SECTION */
@@ -423,34 +444,34 @@
         }
 
         #thankMessage {
-            font-size: 28px;
+            font-size: 30px;
             color: var(--uppc-black);
-            font-weight: 800;
+            font-weight: 900;
             margin-bottom: 12px;
             line-height: 1.4;
-            letter-spacing: -0.6px;
-            background: linear-gradient(135deg, var(--uppc-red) 0%, var(--uppc-dark-red) 100%);
+            letter-spacing: -0.8px;
+            background: linear-gradient(135deg, #E31937 0%, #B8152B 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .thank-subtext {
-            font-size: 17px;
-            color: var(--uppc-red);
+            font-size: 18px;
+            color: #E31937;
             margin-bottom: 40px;
-            font-weight: 600;
-            letter-spacing: 0.2px;
-            opacity: 0.95;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            opacity: 1;
         }
 
         .thank-divider {
-            width: 100px;
-            height: 5px;
-            background: linear-gradient(90deg, var(--uppc-red) 0%, var(--uppc-yellow) 50%, var(--uppc-dark-red) 100%);
-            margin: 30px auto;
-            border-radius: 12px;
-            box-shadow: 0 6px 16px rgba(227, 25, 55, 0.35);
+            width: 110px;
+            height: 6px;
+            background: linear-gradient(90deg, #E31937 0%, #FCD116 50%, #B8152B 100%);
+            margin: 32px auto;
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(227, 25, 55, 0.4);
         }
 
         /* RESPONSIVE */
@@ -832,7 +853,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const scriptURL = "https://script.google.com/macros/s/AKfycbyinASCQOwRIkTZEt3EzBYpfkjYulY_WhvuGb6zrxgWwVTRmc6yXCyRqTjmMtc-A4et/exec";
+            const scriptURL = "https://script.google.com/macros/s/AKfycbwVD0Rt1PdxrgSZ8AFfAxauML947NXbuHDV5iA65azyMU6cOMqsc3JJ0LCA4oz9TsR1/exec";
             const form = document.getElementById("feedbackForm");
             const cards = document.querySelectorAll(".emoji-card");
             const progressFill = document.getElementById("progressFill");
