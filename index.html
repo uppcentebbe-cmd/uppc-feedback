@@ -11,6 +11,11 @@
             box-sizing: border-box;
         }
 
+        html {
+            background: #FFF9B8;
+            scroll-behavior: smooth;
+        }
+
         /* UPPC Brand Colors */
         :root {
             --uppc-red: #E31937;
@@ -22,7 +27,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background: linear-gradient(180deg, #ffffff 0%, #ffffff 50%, #fafbfc 100%);
+            background: #F8F2B3;
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -31,6 +36,9 @@
             backdrop-filter: blur(15px);
             position: relative;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         body::before {
@@ -40,10 +48,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(227, 25, 55, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(252, 209, 22, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
+            background: transparent;
             pointer-events: none;
             z-index: 0;
         }
@@ -55,7 +60,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background: transparent;
             pointer-events: none;
             z-index: 0;
         }
@@ -68,16 +73,15 @@
         }
 
         .container {
-            background: #ffffff;
+            background: #FFFFFF;
             border-radius: 36px;
             padding: 55px 50px;
             box-shadow: 
                 0 12px 40px rgba(0, 0, 0, 0.08),
-                0 0 80px rgba(227, 25, 55, 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 1);
             animation: slideUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
             backdrop-filter: blur(25px);
-            border: 1.5px solid rgba(227, 25, 55, 0.08);
+            border: 3px solid #FFFFFF;
             position: relative;
         }
 
@@ -88,7 +92,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(252, 209, 22, 0.03) 0%, rgba(227, 25, 55, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(252, 209, 22, 0.02) 0%, rgba(0, 0, 0, 0.01) 100%);
             border-radius: 32px;
             pointer-events: none;
         }
@@ -109,17 +113,15 @@
         /* HEADER */
         .header {
             text-align: center;
-            margin-bottom: 48px;
-            padding-bottom: 32px;
+            margin: -55px -50px 48px -50px;
+            padding: 40px 50px 32px 50px;
             border-bottom: 3px solid #FCD116;
             position: relative;
             animation: fadeInDown 0.8s ease-out 0.1s both;
-            background: rgba(255, 255, 255, 0.5);
+            background: #FFFFFF;
             border-radius: 20px;
-            padding: 32px 40px;
-            box-shadow: 0 4px 20px rgba(227, 25, 55, 0.08);
-            margin: -55px -50px 48px -50px;
-            padding: 40px 50px 32px 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: block;
         }
 
         @keyframes fadeInDown {
@@ -144,12 +146,18 @@
         }
 
         .logo {
-            max-width: 420px;
+            max-width: 100%;
+            width: 100%;
             height: auto;
             margin-bottom: 28px;
-            filter: drop-shadow(0 14px 28px rgba(227, 25, 55, 0.3));
+            filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.12)) brightness(1.1) saturate(0.8);
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             animation: logoZoomIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+            border-radius: 20px;
+            display: block;
+            background: #FFFFFF;
+            padding: 8px;
+            box-sizing: border-box;
         }
 
         @keyframes logoZoomIn {
@@ -165,20 +173,31 @@
 
         .logo:hover {
             transform: scale(1.08) translateY(-3px);
-            filter: drop-shadow(0 18px 36px rgba(227, 25, 55, 0.4));
+            filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.15));
         }
 
         .header-text {
-            color: var(--uppc-black);
-            font-size: 34px;
+            color: #1a1a1a;
+            font-size: 28px;
             font-weight: 900;
-            margin-bottom: 12px;
+            margin-bottom: 0px;
             letter-spacing: -0.8px;
-            background: linear-gradient(135deg, #E31937 0%, #B8152B 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 2px 4px rgba(227, 25, 55, 0.1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-text::before {
+            content: '';
+        }
+
+        .header-text::after {
+            content: '';
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(15deg); }
         }
 
         .header-subtext {
@@ -208,13 +227,12 @@
 
         .progress-bar {
             height: 12px;
-            background: linear-gradient(90deg, rgba(227, 25, 55, 0.15) 0%, rgba(252, 209, 22, 0.15) 100%);
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%);
             border-radius: 14px;
             overflow: hidden;
             border: 2px solid rgba(252, 209, 22, 0.8);
             box-shadow: 
-                inset 0 2px 4px rgba(0, 0, 0, 0.06),
-                0 4px 12px rgba(227, 25, 55, 0.12);
+                inset 0 2px 4px rgba(0, 0, 0, 0.06);
         }
 
         .progress-fill {
@@ -224,7 +242,6 @@
             transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             border-radius: 14px;
             box-shadow: 
-                0 0 20px rgba(227, 25, 55, 0.7),
                 inset 0 1px 0 rgba(255, 255, 255, 0.5);
         }
 
@@ -273,7 +290,7 @@
             font-size: 20px;
             font-weight: 900;
             box-shadow: 
-                0 10px 24px rgba(227, 25, 55, 0.5),
+                0 8px 16px rgba(0, 0, 0, 0.12),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             flex-shrink: 0;
             letter-spacing: -0.2px;
@@ -293,7 +310,7 @@
             align-items: center;
             justify-content: center;
             padding: 28px 22px;
-            background: linear-gradient(135deg, rgba(252, 209, 22, 0.2) 0%, rgba(227, 25, 55, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(252, 209, 22, 0.3) 0%, rgba(0, 0, 0, 0.05) 100%);
             border: 3px solid #FCD116;
             border-radius: 24px;
             cursor: pointer;
@@ -301,9 +318,11 @@
             position: relative;
             overflow: hidden;
             box-shadow: 
-                0 8px 20px rgba(227, 25, 55, 0.16),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9),
-                0 0 20px rgba(252, 209, 22, 0.1);
+                0 8px 16px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
         }
 
         .emoji-card::before {
@@ -514,6 +533,8 @@
             text-align: center;
             padding: 80px 50px;
             animation: celebrationZoom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: #FFFFFF;
+            border-radius: 24px;
         }
 
         @keyframes celebrationZoom {
@@ -568,23 +589,114 @@
             background: linear-gradient(90deg, #E31937 0%, #FCD116 50%, #B8152B 100%);
             margin: 32px auto;
             border-radius: 14px;
-            box-shadow: 0 8px 20px rgba(227, 25, 55, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
+        /* RESPONSIVE - TABLET (768px to 1024px) */
+        @media (max-width: 1024px) and (min-width: 769px) {
             .container {
-                padding: 32px 24px;
-                border-radius: 24px;
+                padding: 45px 40px;
+                border-radius: 32px;
             }
 
             .logo {
-                max-width: 300px;
-                margin-bottom: 18px;
+                max-width: 100%;
+                width: 100%;
+                margin-bottom: 24px;
             }
 
             .header-text {
-                font-size: 26px;
+                font-size: 30px;
+                margin-bottom: 10px;
+            }
+
+            .header-subtext {
+                font-size: 16px;
+            }
+
+            .emoji-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 16px;
+            }
+
+            .emoji-card {
+                padding: 22px 14px;
+                border-radius: 18px;
+            }
+
+            .emoji {
+                font-size: 50px;
+                margin-bottom: 12px;
+            }
+
+            .emoji-label {
+                font-size: 13px;
+            }
+
+            .question-number {
+                width: 42px;
+                height: 42px;
+                font-size: 18px;
+                margin-right: 14px;
+            }
+
+            .question-title {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            .header {
+                background: #FFFFFF;
+            }
+
+            .progress-bar {
+                height: 10px;
+            }
+
+            .progress-text {
+                font-size: 13px;
+            }
+
+            #thankyou {
+                padding: 70px 40px;
+                background: #FFFFFF;
+            }
+
+            #thankEmoji {
+                font-size: 120px;
+                margin-bottom: 25px;
+            }
+
+            #thankMessage {
+                font-size: 28px;
+            }
+
+            .thank-subtext {
+                font-size: 17px;
+                margin-bottom: 35px;
+            }
+
+            .thank-divider {
+                width: 100px;
+                height: 5px;
+            }
+        }
+
+        /* RESPONSIVE - TABLET PORTRAIT (max-width 768px) */
+        @media (max-width: 768px) {
+            .container {
+                padding: 35px 28px;
+                border-radius: 26px;
+            }
+
+            .logo {
+                max-width: 100%;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .header-text {
+                font-size: 28px;
                 margin-bottom: 8px;
             }
 
@@ -617,8 +729,26 @@
                 font-size: 16px;
             }
 
+            .question-title {
+                font-size: 17px;
+                margin-bottom: 18px;
+            }
+
+            .header {
+                background: #FFFFFF;
+            }
+
+            .progress-bar {
+                height: 9px;
+            }
+
+            .progress-text {
+                font-size: 12px;
+            }
+
             #thankyou {
                 padding: 60px 30px;
+                background: #FFFFFF;
             }
 
             #thankEmoji {
@@ -628,6 +758,16 @@
 
             #thankMessage {
                 font-size: 24px;
+            }
+
+            .thank-subtext {
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+
+            .thank-divider {
+                width: 90px;
+                height: 4px;
             }
         }
 
@@ -641,13 +781,15 @@
             }
 
             .logo {
-                max-width: 240px;
+                max-width: 100%;
+                width: 100%;
                 margin-bottom: 14px;
             }
 
             .header {
                 margin-bottom: 32px;
                 padding-bottom: 20px;
+                background: #FFFFFF;
             }
 
             .header-text {
@@ -702,6 +844,7 @@
 
             #thankyou {
                 padding: 40px 20px;
+                background: #FFFFFF;
             }
 
             #thankEmoji {
@@ -757,9 +900,18 @@
             <div id="mainContent">
                 <!-- HEADER -->
                 <div class="header">
-                    <img src="UPPC-LOGO.png" alt="Uganda Printing and Publishing Corporation" class="logo">
-                    <h1 class="header-text">Your Feedback Matters</h1>
-                    <p class="header-subtext">Help UPPC serve you better</p>
+                    <img src="UPPC-LOGO.png" alt="Uganda Printing and Publishing Corporation" class="logo" style="width: 100%; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: center; align-items: center; width: 100%; gap: 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 75px; animation: wave 0.6s ease-in-out infinite;">👋</span>
+                            <h1 class="header-text" style="margin-bottom: 0; margin-top: 0;">Welcome</h1>
+                        </div>
+                        <span style="font-size: 32px; font-weight: 900; color: #1a1a1a;">:</span>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <h1 class="header-text" style="margin-bottom: 0; margin-top: 0; font-size: 26px;">Touch to Rate</h1>
+                            <span style="font-size: 75px; animation: wave 0.6s ease-in-out infinite;">☝️</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PROGRESS BAR -->
@@ -771,81 +923,46 @@
                 </div>
 
                 <form id="feedbackForm">
-                    <!-- PRODUCT QUALITY -->
+                    <!-- QUESTION 1: EXPERIENCE TODAY -->
                     <div class="question-section">
                         <label class="question-title">
                             <span class="question-number">1</span>
-                            Rate Product Quality
+                            How was your experience with UPPC today?
                         </label>
                         <div class="emoji-grid">
                             <label class="emoji-card">
-                                <input type="radio" name="product_quality" value="Very Poor">
+                                <input type="radio" name="experience_today" value="Very Poor">
                                 <span class="emoji">😡</span>
                                 <span class="emoji-label">Very Poor</span>
                             </label>
                             <label class="emoji-card">
-                                <input type="radio" name="product_quality" value="Poor">
+                                <input type="radio" name="experience_today" value="Poor">
                                 <span class="emoji">🙁</span>
                                 <span class="emoji-label">Poor</span>
                             </label>
                             <label class="emoji-card">
-                                <input type="radio" name="product_quality" value="Average">
+                                <input type="radio" name="experience_today" value="Average">
                                 <span class="emoji">😐</span>
                                 <span class="emoji-label">Average</span>
                             </label>
                             <label class="emoji-card">
-                                <input type="radio" name="product_quality" value="Good">
+                                <input type="radio" name="experience_today" value="Good">
                                 <span class="emoji">🙂</span>
                                 <span class="emoji-label">Good</span>
                             </label>
                             <label class="emoji-card">
-                                <input type="radio" name="product_quality" value="Excellent">
+                                <input type="radio" name="experience_today" value="Excellent">
                                 <span class="emoji">🤩</span>
                                 <span class="emoji-label">Excellent</span>
                             </label>
                         </div>
                     </div>
 
-                    <!-- SERVICE QUALITY -->
+                    <!-- QUESTION 2: CUSTOMER SERVICE -->
                     <div class="question-section">
                         <label class="question-title">
                             <span class="question-number">2</span>
-                            Rate Service Quality
-                        </label>
-                        <div class="emoji-grid">
-                            <label class="emoji-card">
-                                <input type="radio" name="service_quality" value="Very Poor">
-                                <span class="emoji">😡</span>
-                                <span class="emoji-label">Very Poor</span>
-                            </label>
-                            <label class="emoji-card">
-                                <input type="radio" name="service_quality" value="Poor">
-                                <span class="emoji">🙁</span>
-                                <span class="emoji-label">Poor</span>
-                            </label>
-                            <label class="emoji-card">
-                                <input type="radio" name="service_quality" value="Average">
-                                <span class="emoji">😐</span>
-                                <span class="emoji-label">Average</span>
-                            </label>
-                            <label class="emoji-card">
-                                <input type="radio" name="service_quality" value="Good">
-                                <span class="emoji">🙂</span>
-                                <span class="emoji-label">Good</span>
-                            </label>
-                            <label class="emoji-card">
-                                <input type="radio" name="service_quality" value="Excellent">
-                                <span class="emoji">🤩</span>
-                                <span class="emoji-label">Excellent</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- CUSTOMER SERVICE -->
-                    <div class="question-section">
-                        <label class="question-title">
-                            <span class="question-number">3</span>
-                            Rate Customer Service
+                            Customer Service
                         </label>
                         <div class="emoji-grid">
                             <label class="emoji-card">
@@ -876,11 +993,81 @@
                         </div>
                     </div>
 
-                    <!-- OVERALL EXPERIENCE -->
+                    <!-- QUESTION 3: PRODUCT QUALITY -->
+                    <div class="question-section">
+                        <label class="question-title">
+                            <span class="question-number">3</span>
+                            Product Quality
+                        </label>
+                        <div class="emoji-grid">
+                            <label class="emoji-card">
+                                <input type="radio" name="product_quality" value="Very Poor">
+                                <span class="emoji">😡</span>
+                                <span class="emoji-label">Very Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="product_quality" value="Poor">
+                                <span class="emoji">🙁</span>
+                                <span class="emoji-label">Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="product_quality" value="Average">
+                                <span class="emoji">😐</span>
+                                <span class="emoji-label">Average</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="product_quality" value="Good">
+                                <span class="emoji">🙂</span>
+                                <span class="emoji-label">Good</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="product_quality" value="Excellent">
+                                <span class="emoji">🤩</span>
+                                <span class="emoji-label">Excellent</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- QUESTION 4: TIMELINESS OF SERVICE -->
                     <div class="question-section">
                         <label class="question-title">
                             <span class="question-number">4</span>
-                            Rate Overall Experience
+                            Timeliness of Service
+                        </label>
+                        <div class="emoji-grid">
+                            <label class="emoji-card">
+                                <input type="radio" name="timeliness_service" value="Very Poor">
+                                <span class="emoji">😡</span>
+                                <span class="emoji-label">Very Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="timeliness_service" value="Poor">
+                                <span class="emoji">🙁</span>
+                                <span class="emoji-label">Poor</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="timeliness_service" value="Average">
+                                <span class="emoji">😐</span>
+                                <span class="emoji-label">Average</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="timeliness_service" value="Good">
+                                <span class="emoji">🙂</span>
+                                <span class="emoji-label">Good</span>
+                            </label>
+                            <label class="emoji-card">
+                                <input type="radio" name="timeliness_service" value="Excellent">
+                                <span class="emoji">🤩</span>
+                                <span class="emoji-label">Excellent</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- QUESTION 5: OVERALL EXPERIENCE -->
+                    <div class="question-section">
+                        <label class="question-title">
+                            <span class="question-number">5</span>
+                            Overall Experience
                         </label>
                         <div class="emoji-grid">
                             <label class="emoji-card">
@@ -911,10 +1098,10 @@
                         </div>
                     </div>
 
-                    <!-- RECOMMENDATION -->
+                    <!-- QUESTION 6: RECOMMENDATION -->
                     <div class="question-section">
                         <label class="question-title">
-                            <span class="question-number">5</span>
+                            <span class="question-number">6</span>
                             Would you recommend UPPC?
                         </label>
                         <div class="emoji-grid">
@@ -950,7 +1137,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const scriptURL = "https://script.google.com/macros/s/AKfycbzBveLU1IU2ejhO-PfOKFFbmkFr6dxJIsXSuJG4IsHEv4KoRUq_N859khYTD4pvtLY3/exec";
+            const scriptURL = "https://script.google.com/macros/s/AKfycbwVD0Rt1PdxrgSZ8AFfAxauML947NXbuHDV5iA65azyMU6cOMqsc3JJ0LCA4oz9TsR1/exec";
             const form = document.getElementById("feedbackForm");
             const cards = document.querySelectorAll(".emoji-card");
             const progressFill = document.getElementById("progressFill");
@@ -959,7 +1146,7 @@
             const thankYou = document.getElementById("thankyou");
 
             let isSubmitting = false;
-            const totalQuestions = 5;
+            const totalQuestions = 6;
 
             // Update progress bar
             function updateProgress() {
@@ -1010,9 +1197,10 @@
                     document.querySelector(`input[name="${name}"]:checked`)?.value || "";
 
                 const params = new URLSearchParams({
-                    product_quality: getVal("product_quality"),
-                    service_quality: getVal("service_quality"),
+                    experience_today: getVal("experience_today"),
                     customer_service: getVal("customer_service"),
+                    product_quality: getVal("product_quality"),
+                    timeliness_service: getVal("timeliness_service"),
                     overall: getVal("overall"),
                     recommend: getVal("recommend")
                 });
